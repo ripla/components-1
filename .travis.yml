@@ -1,2 +1,5 @@
 language: node_js
-script: gulp clean
+script: 
+  - gulp clean
+  - gulp css
+  - gulp gwt
