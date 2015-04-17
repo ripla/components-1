@@ -5,3 +5,4 @@ script:
   - gulp clean
   - gulp css
   - gulp gwt
+  - gulp test:sauce
