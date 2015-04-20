@@ -68,6 +68,14 @@
                 expect(grid.grid.onReady.calledTwice).is.true;
               });
         });
+
+        it('should return thenable from callback', function(done) {
+          return grid.then(function() {
+            return grid;
+          }).then(function() {
+            done();
+          })
+        })
       });
     });
 

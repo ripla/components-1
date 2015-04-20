@@ -2,14 +2,20 @@ var grid, wrapper;
 
 describe.feature = function(description, suite) {
   describe(description, function() {
-    beforeEach(function() {
-      if(!grid) {
-        return initializeGrid();
-      } else {
-        return grid.then(function() {
-          return initializeGrid();
-        });
-      }
+    beforeEach(function(done) {
+      initializeGrid();
+
+      waitUntil(function() {
+        return grid.then;
+      }, function() {
+        grid.then(done);
+      }, function() {
+        assert.fail();
+      });
+    });
+
+    afterEach(function(done) {
+      return grid.then(done);
     });
 
     suite();

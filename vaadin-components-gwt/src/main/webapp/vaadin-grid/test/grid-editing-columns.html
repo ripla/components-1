@@ -175,12 +175,10 @@
           it('should add new column before using name', function() {
             grid.columns[1].name = 'Value';
 
-            return grid.then(function() {
-              return grid.addColumn({
-                name: "foo",
-                headerHtml: "foo"
-              }, 'Value');
-            }).then(function() {
+            return grid.addColumn({
+              name: "foo",
+              headerHtml: "foo"
+            }, 'Value').then(function() {
               var headers = qaLocal(".v-grid-header .v-grid-row th");
 
               expect(headers[0].innerHTML).to.equal('Name');
