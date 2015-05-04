@@ -47,6 +47,10 @@
         expect(height(grid)).to.equal(height(inner));
       }
 
+      function generateArray(n) {
+        return _.map(_.range(n), function(x) { return [x,x]});
+      };
+
       var inner,
           tbody,
           headers,
@@ -65,7 +69,10 @@
         tfHeight = height(qLocal('tfoot tr td'));
         thHeight = height(qLocal('thead tr th'));
         tdHeight = height(qLocal('tbody tr td'));
-      })
+
+        grid.removeAttribute('style');
+        grid.rows = 10;
+      });
 
       it('should draw correct dimensions and row heights by default', function() {
         assertSameDimensions();
@@ -73,29 +80,31 @@
       });
 
       it('should redraw correctly after modifying body', function() {
-        tbody.innerHTML += tbody.innerHTML;
+        grid.data.source = generateArray(4);
+        grid.rows = 4;
 
         return grid.then(function() {
-          assertSameDimensions();
-          assertHeightByRows(4);
+          return grid.then(function() {
+            assertSameDimensions();
+            assertHeightByRows(4);
+          });
         });
       });
 
       describe('using limited row visibility', function() {
         beforeEach(function() {
           // Increase the number of rows
-          tbody.innerHTML += tbody.innerHTML; //4
-          tbody.innerHTML += tbody.innerHTML; //8
-          tbody.innerHTML += tbody.innerHTML; //16
+          grid.data.source = generateArray(16);
+
+          return grid;
         });
 
         it('should redraw only visible rows', function() {
-          return grid.then(function() {
-            assertSameDimensions();
+            return grid.then(function() {
+              assertSameDimensions();
 
-            // grid has a limit of 10 data rows by default
-            assertHeightByRows(10);
-          });
+              assertHeightByRows(10);
+            });
         });
 
         it('should redraw visible rows after limit is decreased', function() {
@@ -122,6 +131,7 @@
       it('should redraw with fixed dimensions', function() {
         grid.style.width = '300px';
         grid.style.height = '100px';
+        grid.rows = undefined; // to make redrawer use container height.
 
         return grid.then(function() {
           assertSameDimensions();
@@ -133,6 +143,7 @@
           grid.style.position = 'absolute';
           grid.style.width = '100%';
           grid.style.height = '100%';
+          grid.rows = undefined;
 
           return grid;
         });
@@ -146,15 +157,9 @@
 
           // For some reason in IE sometimes there is a slight difference of 1 pixels
           expect(Math.abs(document.body.clientWidth - width(grid))).to.be.at.most(1);
-        })
+        });
 
         it('should allow different dimensions for v-grid and inner div', function() {
-          // We can have different height for v-grid and the inner grid.
-          // Also we can define more than 10 rows.
-          tbody.innerHTML += tbody.innerHTML; //4
-          tbody.innerHTML += tbody.innerHTML; //8
-          tbody.innerHTML += tbody.innerHTML; //16
-
           grid.rows = 12;
           grid.style.width = '50%';
 
