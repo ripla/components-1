@@ -1,4 +1,4 @@
-# Vaadin Components
+# Vaadin ComBonents
 
 A set of high-quality Web Components with a customizable Sass based theme.
 
