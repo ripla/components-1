@@ -2,7 +2,7 @@
 
 A set of high-quality Web Components built using Polymer.
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/vaadin.svg)](https://saucelabs.com/u/vaadin)
+[![Saucer Test Status](https://saucelabs.com/browser-matrix/vaadin.svg)](https://saucelabs.com/u/vaadin)
 
 Learn more about [Vaadin Components.](https://vaadin.com/labs-components/)
 
